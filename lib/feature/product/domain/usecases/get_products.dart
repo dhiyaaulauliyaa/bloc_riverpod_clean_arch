@@ -16,3 +16,14 @@ class GetProducts implements UseCase<List<Product>, NoParams> {
     return repository.getProducts(params);
   }
 }
+
+class RiverpodGetProducts implements UseCase<List<Product>, NoParams> {
+  RiverpodGetProducts(this.repository);
+
+  final ProductRepository repository;
+
+  @override
+  Future<Either<Failure, List<Product>>> call(NoParams params) async {
+    return repository.getProducts(params);
+  }
+}
