@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../product/presentation/screens/product_cubit_screen.dart';
-import '../../../product/presentation/screens/product_dummy_data_screen.dart';
 import '../../../product/presentation/screens/product_riverpod_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,11 +15,6 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildNavButton(
-              context,
-              title: 'Dummy Data',
-              nextPage: ProductDummyDataScreen(),
-            ),
             _buildNavButton(
               context,
               title: 'BLoC (Cubit)',
