@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'core/injection/service_locator.dart';
+import 'feature/home/presentation/screen/home_screen.dart';
 
 void main() async {
   await configureDependencies();
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       builder: (_, Widget? __) => MaterialApp(
         title: 'MotionApp',
-        home: const SizedBox(),
+        home: const HomeScreen(),
         theme: ThemeData(
           brightness: Brightness.dark,
           textTheme: GoogleFonts.spaceGroteskTextTheme().apply(
