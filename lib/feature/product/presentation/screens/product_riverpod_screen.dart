@@ -40,10 +40,15 @@ class ProductRiverpodScreen extends HookWidget with AppMessengerService {
     return ref.watch(productStateNotifierProvider).when(
           init: () => const ProductListLoading(),
           loading: () => const ProductListLoading(),
-          error: (failure) => ProductListError(failure: failure),
           success: (data) => ProductList(
             products: data,
             onRefresh: () {
+              ref.read(productStateNotifierProvider.notifier).getProducts();
+            },
+          ),
+          error: (failure) => ProductListError(
+            failure: failure,
+            onRetry: () {
               ref.read(productStateNotifierProvider.notifier).getProducts();
             },
           ),
