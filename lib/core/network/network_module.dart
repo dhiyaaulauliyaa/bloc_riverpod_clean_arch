@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injectable/injectable.dart';
 
 import '../errors/exceptions.dart';
@@ -154,3 +155,5 @@ abstract class NetworkModule {
 
 @LazySingleton(as: NetworkModule)
 class NetworkModuleImpl extends NetworkModule {}
+
+final networkModuleProvider = Provider((ref) => NetworkModuleImpl());
