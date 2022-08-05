@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../product/presentation/screens/product_cubit_screen.dart';
 import '../../../product/presentation/screens/product_dummy_data_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -22,7 +23,7 @@ class HomeScreen extends StatelessWidget {
             _buildNavButton(
               context,
               title: 'BLoC (Cubit)',
-              nextPage: const SizedBox(),
+              nextPage: const ProductCubitScreen(),
             ),
             _buildNavButton(
               context,
