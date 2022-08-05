@@ -46,12 +46,17 @@ class ProductCubitScreen extends HookWidget with AppMessengerService {
         return const ProductListLoading();
       case ProductCubitStatus.loading:
         return const ProductListLoading();
-      case ProductCubitStatus.failed:
-        return ProductListError(failure: state.failure);
       case ProductCubitStatus.success:
         return ProductList(
           products: state.data ?? [],
           onRefresh: () {
+            context.read<ProductCubit>().getProducts();
+          },
+        );
+      case ProductCubitStatus.failed:
+        return ProductListError(
+          failure: state.failure,
+          onRetry: () {
             context.read<ProductCubit>().getProducts();
           },
         );
