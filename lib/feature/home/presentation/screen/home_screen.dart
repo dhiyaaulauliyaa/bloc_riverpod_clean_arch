@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../product/presentation/screens/product_dummy_data_screen.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -15,7 +17,7 @@ class HomeScreen extends StatelessWidget {
             _buildNavButton(
               context,
               title: 'Dummy Data',
-              nextPage: const SizedBox(),
+              nextPage: ProductDummyDataScreen(),
             ),
             _buildNavButton(
               context,
