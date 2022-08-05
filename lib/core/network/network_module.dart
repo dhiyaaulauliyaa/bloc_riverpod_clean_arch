@@ -23,21 +23,7 @@ abstract class NetworkModule {
   ) async {
     try {
       var response = await call;
-      var data = responseParser(response);
-
-      if (data['status'] == 'success') return data;
-
-      if (data['response'] != null) {
-        if (data['request'] == data['success']) return data;
-
-        var firstError = (data['response'] as List).firstWhere(
-          (d) => d['status'] != 'success',
-        );
-        data['status'] = firstError['status'];
-        data['message'] = firstError['message'];
-      }
-
-      throw ServerException(code: data['status'], message: data['message']);
+      return responseParser(response);
     }
 
     /* On Known Error */
