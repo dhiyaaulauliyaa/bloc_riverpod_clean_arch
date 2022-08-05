@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/base/base_usecase.dart';
-import '../../../../core/base/repository_mixin.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/injection/service_locator.dart';
@@ -13,7 +12,7 @@ import '../datasources/product_dummy_datasource.dart';
 import '../datasources/product_remote_datasource.dart';
 
 @LazySingleton(as: ProductRepository)
-class ProductRepositoryImpl with RepositoryMixin implements ProductRepository {
+class ProductRepositoryImpl implements ProductRepository {
   final remoteDataSource = getIt<ProductRemoteDataSource>();
   final dummyDataSource = getIt<ProductDummyDataSource>();
 
@@ -23,6 +22,30 @@ class ProductRepositoryImpl with RepositoryMixin implements ProductRepository {
     //       (products) => Right(products),
     //     );
 
+    try {
+      var result = await remoteDataSource.getProducts();
+
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message, code: e.code));
+    } on NetworkException catch (e) {
+      return Left(NetworkFailure(message: e.message));
+    } catch (e) {
+      /* Do some error logging */
+      Log.error('Unhandled error: $e');
+
+      return const Left(ClientFailure(message: 'Something went wrong'));
+    }
+  }
+}
+
+class RiverpodProductRepositoryImpl implements ProductRepository {
+  RiverpodProductRepositoryImpl(this.remoteDataSource);
+
+  final ProductRemoteDataSource remoteDataSource;
+
+  @override
+  Future<Either<Failure, List<Product>>> getProducts(NoParams params) async {
     try {
       var result = await remoteDataSource.getProducts();
 

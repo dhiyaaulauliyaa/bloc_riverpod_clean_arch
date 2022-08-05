@@ -23,3 +23,18 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
     return ProductModel.fromJsonList(result['products']);
   }
 }
+
+class RiverpodProductRemoteDataSourceImpl implements ProductRemoteDataSource {
+  RiverpodProductRemoteDataSourceImpl(this.networkModule);
+
+  final NetworkModule networkModule;
+
+  @override
+  Future<List<Product>> getProducts() async {
+    var result = await networkModule.getMethod(
+      NetworkURL.products,
+    );
+
+    return ProductModel.fromJsonList(result['products']);
+  }
+}
