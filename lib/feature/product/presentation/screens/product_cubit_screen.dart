@@ -32,7 +32,7 @@ class ProductCubitScreen extends HookWidget with AppMessengerService {
           builder: (context, state) {
             return AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
-              child: _buildChild(state),
+              child: _buildChild(context, state),
             );
           },
         ),
@@ -40,16 +40,21 @@ class ProductCubitScreen extends HookWidget with AppMessengerService {
     );
   }
 
-  Widget _buildChild(ProductState state) {
+  Widget _buildChild(BuildContext context, ProductState state) {
     switch (state.status) {
       case ProductCubitStatus.initial:
         return const ProductListLoading();
       case ProductCubitStatus.loading:
         return const ProductListLoading();
-      case ProductCubitStatus.success:
-        return ProductList(products: state.data ?? []);
       case ProductCubitStatus.failed:
         return ProductListError(failure: state.failure);
+      case ProductCubitStatus.success:
+        return ProductList(
+          products: state.data ?? [],
+          onRefresh: () {
+            context.read<ProductCubit>().getProducts();
+          },
+        );
     }
   }
 }
